@@ -1,0 +1,138 @@
+[
+  {
+    "trial": 3,
+    "validation_accuracy": 0.9932,
+    "best_epoch": 22,
+    "hidden_sizes": [
+      768,
+      384,
+      192
+    ],
+    "activation": "gelu",
+    "dropout": 0.1,
+    "weight_decay": 0.0001,
+    "learning_rate": 0.001,
+    "label_smoothing": 0.05,
+    "mixup_alpha": 0.0,
+    "augmentation": true,
+    "test_accuracy": 0.9932
+  },
+  {
+    "trial": 7,
+    "validation_accuracy": 0.9904,
+    "best_epoch": 25,
+    "hidden_sizes": [
+      1024,
+      512,
+      256
+    ],
+    "activation": "gelu",
+    "dropout": 0.15,
+    "weight_decay": 0.0003,
+    "learning_rate": 0.00075,
+    "label_smoothing": 0.05,
+    "mixup_alpha": 0.2,
+    "augmentation": true
+  },
+  {
+    "trial": 1,
+    "validation_accuracy": 0.9902,
+    "best_epoch": 25,
+    "hidden_sizes": [
+      512,
+      256,
+      128
+    ],
+    "activation": "gelu",
+    "dropout": 0.1,
+    "weight_decay": 0.0001,
+    "learning_rate": 0.0015,
+    "label_smoothing": 0.05,
+    "mixup_alpha": 0.2,
+    "augmentation": true
+  },
+  {
+    "trial": 6,
+    "validation_accuracy": 0.9874,
+    "best_epoch": 16,
+    "hidden_sizes": [
+      512,
+      256,
+      128
+    ],
+    "activation": "silu",
+    "dropout": 0.05,
+    "weight_decay": 1e-05,
+    "learning_rate": 0.001,
+    "label_smoothing": 0.05,
+    "mixup_alpha": 0.0,
+    "augmentation": false
+  },
+  {
+    "trial": 2,
+    "validation_accuracy": 0.9872,
+    "best_epoch": 16,
+    "hidden_sizes": [
+      512,
+      256,
+      128
+    ],
+    "activation": "relu",
+    "dropout": 0.15,
+    "weight_decay": 0.0003,
+    "learning_rate": 0.001,
+    "label_smoothing": 0.05,
+    "mixup_alpha": 0.2,
+    "augmentation": true
+  },
+  {
+    "trial": 4,
+    "validation_accuracy": 0.9864,
+    "best_epoch": 18,
+    "hidden_sizes": [
+      512,
+      256
+    ],
+    "activation": "silu",
+    "dropout": 0.1,
+    "weight_decay": 0.0003,
+    "learning_rate": 0.0015,
+    "label_smoothing": 0.0,
+    "mixup_alpha": 0.2,
+    "augmentation": true
+  },
+  {
+    "trial": 5,
+    "validation_accuracy": 0.9862,
+    "best_epoch": 21,
+    "hidden_sizes": [
+      768,
+      384,
+      192
+    ],
+    "activation": "relu",
+    "dropout": 0.2,
+    "weight_decay": 0.0001,
+    "learning_rate": 0.00075,
+    "label_smoothing": 0.05,
+    "mixup_alpha": 0.2,
+    "augmentation": true
+  },
+  {
+    "trial": 8,
+    "validation_accuracy": 0.9818,
+    "best_epoch": 10,
+    "hidden_sizes": [
+      512,
+      256,
+      128
+    ],
+    "activation": "relu",
+    "dropout": 0.05,
+    "weight_decay": 1e-05,
+    "learning_rate": 0.0015,
+    "label_smoothing": 0.0,
+    "mixup_alpha": 0.0,
+    "augmentation": false
+  }
+]
