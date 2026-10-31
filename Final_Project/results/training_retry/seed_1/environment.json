@@ -1,0 +1,6 @@
+{
+  "torch": "2.13.0+cu126",
+  "numpy": "2.5.1",
+  "cuda_runtime": "12.6",
+  "device": "cuda"
+}

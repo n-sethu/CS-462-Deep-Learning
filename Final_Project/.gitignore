@@ -1,3 +1,13 @@
 README.MD
 \data
 \checkpoints
+
+# Local environments and generated experiment artifacts
+.venv/
+dvenv/
+__pycache__/
+*.pyc
+/data/
+/checkpoints/
+/results/training/
+/cifar10-*.log
