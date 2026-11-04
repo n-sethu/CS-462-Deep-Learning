@@ -1,0 +1,14 @@
+{
+  "model_accuracy": [
+    0.939,
+    0.9374,
+    0.9346
+  ],
+  "ensemble_accuracy": 0.9458,
+  "pairwise_disagreements": {
+    "2_1": 233,
+    "3_1": 255,
+    "3_2": 285
+  },
+  "unanimous_fraction": 0.9262
+}

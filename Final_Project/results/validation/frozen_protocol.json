@@ -1,0 +1,73 @@
+{
+  "temperature": 1.31492569020736,
+  "temperature_argmax_changes": 6,
+  "selected_mlp_seeds": {
+    "A": 33,
+    "B": 33,
+    "C": 33,
+    "D": 22
+  },
+  "epochs": 200,
+  "learning_rate": 0.001,
+  "batch_size": 256,
+  "patience": 20,
+  "lr_C": 1.0,
+  "feature_sets": {
+    "A": [
+      "confidence",
+      "entropy",
+      "margin",
+      "mutual_information"
+    ],
+    "B": [
+      "confidence",
+      "entropy",
+      "margin",
+      "mutual_information",
+      "mean_novelty"
+    ],
+    "C": [
+      "confidence",
+      "entropy",
+      "margin",
+      "mutual_information",
+      "mean_novelty",
+      "novelty_variation"
+    ],
+    "D": [
+      "confidence",
+      "entropy",
+      "margin",
+      "mutual_information",
+      "mean_novelty",
+      "novelty_variation",
+      "max_novelty"
+    ]
+  },
+  "test_evaluated": false,
+  "checkpoint_selection_caveat": "Saved CNNs selected by minimum validation loss, not maximum accuracy.",
+  "novelty_reference": "Centroids: CNN train; population mean/std: detector train; novelty variation ddof=0.",
+  "tie_break": "Ascending risk, then original CIFAR training image ID",
+  "files": {
+    "D_mlp_22.pt": "434335d908d78fce1577ea4d0661da8ff5893a42e0dfc93c04932482a4cef9a2",
+    "C_mlp_22.pt": "cbde5f85b3e21034d5badc132b52f9866e251bd1083aacebab6c8b25defa5f48",
+    "B_mlp_22.pt": "3505bd8a1015a610d6b0432fe970c3548585d0803837316e233e7c10879bfc95",
+    "novelty_stats.npz": "0c96285b72763bcdd38f7029ff686a26b4ae543fd23ce862248cdf4b60d1688e",
+    "detector_train.npz": "39387758067eb38e4663e2e771343cdbece4a73ecd988d045e6dfd6a164238c4",
+    "A_mlp_22.pt": "6fa1c44ccb2e6e833c500703ef29a53285b8ec87af3d4bada9f33e90dd440beb",
+    "D_mlp_33.pt": "3823e0ed9e1f89e65ad947478a4f0c8c5dcbf48cfcb2b17b3b92397f63d68612",
+    "C_mlp_33.pt": "aa887b61116dc94229c9147fc53db3f43da62143dd179c6ce42836d6ed5b9033",
+    "B_mlp_33.pt": "850da2bde4e1b42b9ed0c3e2bca86f41e2f5d454b18ac6237344658300a66c09",
+    "A_mlp_33.pt": "ee9051fde9bc6c3de44b3b83f7b7b400e4ddc24ebda9bc5d389bb8512cab7697",
+    "D_lr.joblib": "7635993d7d760fd7b699da567c6821b02f09fa6ba5c6e6f72b30fb7bed53f2e9",
+    "B_lr.joblib": "414ae08e7e6125ea6cc4126d690ab8cf1f264378ad77163ff9d82a609df3cb59",
+    "C_lr.joblib": "532c71c5b9c446119e7114250851734b774b62c0386f0bca85d50ffa94e28af5",
+    "A_lr.joblib": "779aaf800f1c6bc68df082dcd33ae5fe29cb05054b6d923b8289c4cdf912756c",
+    "val.npz": "d5a00e685a2459fcfa0caf46409b46fcca1960866e63ad8ddf95fe4d1198315a",
+    "train.npz": "28e5de9222a410eaa2d74b4fb8c9b3590042ba02f4812d5aba38a22c0b0b5e47",
+    "D_mlp_11.pt": "6ca1810f16338acab3498e53bd2f1484be08ee5ebc5ff9fa8d10ee7dcb717b45",
+    "C_mlp_11.pt": "aaea71b880afae52a2a79d35a4f1f95f372c1f157f0c41d423f1c8ab14e230a7",
+    "B_mlp_11.pt": "b50c9d26f32b8f2d432055507dff801a770c7866544f6d89a80f424c43d24364",
+    "A_mlp_11.pt": "2fc1d0a94ffc375461250305d2d7b1684672217a90b86e1c13e376662873ef86"
+  }
+}
