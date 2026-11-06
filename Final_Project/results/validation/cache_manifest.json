@@ -1,0 +1,22 @@
+{
+  "checkpoints": {
+    "/common/users/ns1788/beyond-ensemble-agreement/training/seed_1/best.pt": "70c137550f7d134dc0429cfb979e82f7aab5a9727185910d37f3a39d64a7cebc",
+    "/common/users/ns1788/beyond-ensemble-agreement/training/seed_2/best.pt": "eeda679b05a80cbac362ddab5a7d99aa0121c80b66a68b7eb70a90702edfe2ac",
+    "/common/users/ns1788/beyond-ensemble-agreement/training/seed_3/best.pt": "50040af19b8453a75b54e2b89a09c0a5b3bc037c5dbd2841384a8808c7fd7926"
+  },
+  "split_sha256": "bf3934b9fda7519cc4600c0fb04e3772df49c12ecf3541ddcf6737ecd5b3e5c5",
+  "preprocessing": {
+    "mean": [
+      0.4914,
+      0.4822,
+      0.4465
+    ],
+    "std": [
+      0.247,
+      0.2435,
+      0.2616
+    ]
+  },
+  "torch": "2.13.0+cu126",
+  "numpy": "2.5.1"
+}

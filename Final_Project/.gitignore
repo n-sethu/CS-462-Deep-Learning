@@ -1,3 +1,35 @@
 README.MD
-\data
-\checkpoints
+AGENTS.md
+# Local environments and generated experiment artifacts
+.venv/
+dvenv/
+__pycache__/
+*.pyc
+/data/
+/checkpoints/
+/results/training/
+/cifar10-*.log
+
+# Cached representations and fitted validation artifacts
+/results/validation/*.npz
+/results/validation/*.pt
+/results/validation/*.joblib
+/validation-*.log
+/results/final/*.npz
+/final-*.log
+# Cluster-specific link to final result artifacts
+/results/final
+
+*.md
+*.slurm
+*.log
+# Separate detector adaptation caches and trained artifacts
+/results/adaptation/development/
+/results/adaptation/detectors/
+/adaptation-*.log
+
+# Keep the adaptation specification and launcher reviewable
+!AGENTS.md
+!PAPER_SUMMARY.md
+!REPLICATION.md
+

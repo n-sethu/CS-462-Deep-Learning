@@ -1,0 +1,38 @@
+{
+  "status": "exploratory; original test outcomes were known before this protocol",
+  "order": ["h7", "h8"],
+  "splits": "existing saved CIFAR-10 splits only",
+  "prediction": "fixed original T=1 average of member softmax probabilities",
+  "h7": {
+    "geometry": "Mahalanobis versus original Euclidean at stage4",
+    "centroids": "reuse original CNN-training centroids",
+    "covariance": "one LedoitWolf(assume_centered=True) per model on CNN-training true-class-centered residuals",
+    "distance": "norm of lower-Cholesky triangular solve; no explicit inverse or automatic fallback",
+    "comparisons": ["B_Mah-B_Eucl", "C_Mah-C_Eucl", "C_Mah-B_Mah", "(C-B)_Mah-(C-B)_Eucl", "B_Mah-A", "D_Mah-C_Mah"]
+  },
+  "h8": {
+    "geometry": "Euclidean only, independently of H7 outcomes",
+    "stages": {"stage1": 64, "stage2": 128, "stage4": 512},
+    "pooling": "spatial mean after each ResNet stage",
+    "extraction": "temporary forward hooks; stage4 reuses original cache; verify original logits and stage4 features",
+    "comparisons": ["B_stage1-B_stage4", "C_stage1-C_stage4", "B_stage2-B_stage4", "C_stage2-C_stage4", "C-B within each early stage", "B-A and D-C within each early stage"],
+    "corruption_response": "paired per-source changes in standardized mean novelty, all images, remains-correct, becomes-wrong, and other transitions; stage1/stage2 versus stage4"
+  },
+  "novelty_normalization": {"split": "detector_train", "ddof": 0, "epsilon": 1e-8},
+  "detectors": {
+    "reuse_A": true, "new_configurations": ["B", "C", "D"],
+    "lr": {"C": 1.0, "max_iter": 2000, "random_state": 42},
+    "mlp": {"hidden": 32, "activation": "ReLU", "loss": "BCEWithLogitsLoss", "optimizer": "Adam", "learning_rate": 0.001, "batch_size": 256, "max_epochs": 200, "patience": 20, "seeds": [11, 22, 33], "selection": "lowest validation AURC, lower seed breaks ties"},
+    "scaler_split": "detector_train", "threshold_split": "val", "threshold_coverages": [0.8, 0.9]
+  },
+  "evaluation": {
+    "conditions": ["clean", "gaussian_noise_1", "gaussian_noise_3", "gaussian_noise_5", "motion_blur_1", "motion_blur_3", "motion_blur_5", "jpeg_compression_1", "jpeg_compression_3", "jpeg_compression_5"],
+    "subsets": ["all", "unanimous", "unanimous and uncalibrated confidence >= 0.9"],
+    "metrics": ["AUROC", "AURC", "risk80", "risk90"],
+    "bootstrap": {"resamples": 2000, "seed": 20261103, "interval": "95% percentile", "paired": true, "pooled_unit": "original source-image ID; all nine conditions retained"},
+    "min_class_count_for_auroc": 20,
+    "multiplicity": "all predeclared comparisons reported, unadjusted exploratory intervals; no confirmatory claims",
+    "detector_family": "validation-selected MLP is main; LR and all seeds also reported"
+  },
+  "constraints": ["new files only", "no new CNNs", "no tuning on test or corruptions", "no stronger output baseline or demo additions", "stage depth is confounded with representation dimensionality", "unavailable PDFs are not used for paper-specific methodological claims", "one ensemble; bootstrap does not cover ensemble-training variability"]
+}

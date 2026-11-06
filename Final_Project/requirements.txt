@@ -1,1 +1,21 @@
-TODO
+# Core Deep Learning Framework
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+
+# Data Science & Numerical Operations
+numpy>=1.24.0
+pandas>=2.0.0
+scikit-learn>=1.2.0
+scipy>=1.10.0
+
+# Experiment Tracking, Utilities & Notebooks
+tqdm>=4.65.0
+tensorboard>=2.12.0
+jupyterlab>=4.0.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Image & Data Processing (Optional based on data type)
+Pillow>=9.5.0
+opencv-python>=4.7.0

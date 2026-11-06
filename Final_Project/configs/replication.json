@@ -1,0 +1,15 @@
+{
+  "ensembles": 10,
+  "member_seeds": [[1011,1012,1013],[1021,1022,1023],[1031,1032,1033],[1041,1042,1043],[1051,1052,1053],[1061,1062,1063],[1071,1072,1073],[1081,1082,1083],[1091,1092,1093],[1101,1102,1103]],
+  "architecture": "unchanged CIFAR ResNet18",
+  "cnn_checkpoint_selection": "validation loss, matching original executed recipe",
+  "split": "same saved split seed42; randomness varies CNN initialization/data order only",
+  "detectors": "A-D LR and MLP seeds11/22/33; primary selections clean-validation AURC",
+  "studies": ["clean", "shift", "h7", "h8", "confidence_and_transitions", "noise_adaptation", "cost", "permutation", "single_member_output_baselines"],
+  "bootstrap_resamples": 2000,
+  "max_concurrent_ensembles": 2,
+  "plots": false,
+  "retention": "model-only CNN best checkpoints, detectors/scalers/geometry, compact logits, gzip CSVs, JSON provenance; remove only new large feature caches after all stages verify",
+  "interpretation": "replication conditional on fixed dataset/splits/architecture; original ensemble excluded from ten-new-ensemble aggregate and shown separately; follow-ups remain exploratory",
+  "ensemble_summary": "all ten per-ensemble contrasts; mean/std, median, negative-effect fraction, ensemble-resampled mean-effect CI; no selection of best ensemble"
+}
