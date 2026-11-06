@@ -23,3 +23,13 @@ __pycache__/
 *.md
 *.slurm
 *.log
+# Separate detector adaptation caches and trained artifacts
+/results/adaptation/development/
+/results/adaptation/detectors/
+/adaptation-*.log
+
+# Keep the adaptation specification and launcher reviewable
+!AGENTS.md
+!PAPER_SUMMARY.md
+!REPLICATION.md
+

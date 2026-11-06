@@ -1,0 +1,68 @@
+{
+  "status": "Exploratory: final results already inspected",
+  "confidence_bins": [
+    0,
+    0.5,
+    0.7,
+    0.8,
+    0.9,
+    0.95,
+    1
+  ],
+  "minimum_per_class_for_auc": 20,
+  "conditions": [
+    "gaussian_noise_1",
+    "gaussian_noise_3",
+    "gaussian_noise_5",
+    "motion_blur_1",
+    "motion_blur_3",
+    "motion_blur_5",
+    "jpeg_compression_1",
+    "jpeg_compression_3",
+    "jpeg_compression_5"
+  ],
+  "comparisons": [
+    "B-A",
+    "C-B"
+  ],
+  "families": [
+    "lr",
+    "mlp_selected"
+  ],
+  "coverage": [
+    0.8,
+    0.9
+  ],
+  "source_sha256": {
+    "results/final/clean/features.csv": "404e267dcca720d88259d1bef02ea13e9891afdecaf119e40c597a10fd0bb6e3",
+    "results/final/clean/scores.csv": "9b69360c64c151a019d8f5959375ccd51ba1ac203331d7f8db897349c9abd97a",
+    "results/final/clean/threshold_metrics.csv": "21d879af31d0803e1e1d0f9686ced0a2c764770429fcbff680f00b7be19391f3",
+    "results/final/gaussian_noise_1/features.csv": "07f8f66898b8d8a2fd1d5909e28ba636d9e2723314c8936acaac5669f62c1fe0",
+    "results/final/gaussian_noise_1/scores.csv": "16e9bc0f5653ac705bed36eb24c09aabf5ba9690b7f33e80ae8a56abda4b38c7",
+    "results/final/gaussian_noise_1/threshold_metrics.csv": "26d6f276cbc671c5857306f995688e8f0584f36b93696c19f8db60ef35c4cfae",
+    "results/final/gaussian_noise_3/features.csv": "99e458ae9a1262b9e632b00ab482f74b08faad201add3bc731790f20be2209fa",
+    "results/final/gaussian_noise_3/scores.csv": "fcd5192c0403cfc269ee1c12ec025a470d87fd1bc6254240a91f8bf7cecc36fe",
+    "results/final/gaussian_noise_3/threshold_metrics.csv": "2c7df408371e9d191178fca1dffbb3dd71247cbbb5db140d36c2bb3faaf9d5c1",
+    "results/final/gaussian_noise_5/features.csv": "5474ea600c80471360c5bf29a82b98326b61177fd9e94d0d0a1eec966db8af06",
+    "results/final/gaussian_noise_5/scores.csv": "9be7eca2c508cead6d2e5ea4f927dd5e9b2e2b091240d5664db013691af859f0",
+    "results/final/gaussian_noise_5/threshold_metrics.csv": "6c287160d7e302d00e4954a16f935545597e310f469a587a3a7d7be14bbb7ca8",
+    "results/final/motion_blur_1/features.csv": "78b0c6aeeff8f0736f74246818c080492cf7ee28dac381046d292235263901bd",
+    "results/final/motion_blur_1/scores.csv": "ee6198b378800437b27b68b6113ba36fbc64b6241d4e6d660b44d4580b1a11cd",
+    "results/final/motion_blur_1/threshold_metrics.csv": "fa8257b9145b193dc9349f15602af2b446050f2fc112f021cc3fd424b0f7c62c",
+    "results/final/motion_blur_3/features.csv": "bec3f973a05fabd07f188a6f99f803352c2e70967f237293300eff300f016f95",
+    "results/final/motion_blur_3/scores.csv": "7e61de9046a9a65edfd1552ca739232ee3966bc9cc64a7cb2c480078b8a7c6bb",
+    "results/final/motion_blur_3/threshold_metrics.csv": "27d2e546564ab109b22e5eb6d62e47df1161121985ccf11135c5b9fdd18fabec",
+    "results/final/motion_blur_5/features.csv": "4f5e1aefd9383a71dc904528ac6661b2ec8778212c6c154b6a4e56a754d423bd",
+    "results/final/motion_blur_5/scores.csv": "70250bd350fe6bf52ce260f54098aeb896f0bd05d11bd8da744bfed87d37e0f4",
+    "results/final/motion_blur_5/threshold_metrics.csv": "d8082a66e11f60b4f87cca09e2852716b32c934d8abaddb327414ec26f58ee7f",
+    "results/final/jpeg_compression_1/features.csv": "54dc3da39abe3a0744301f76bafd82fa7444a9f8b462ef4571371add2cf82a78",
+    "results/final/jpeg_compression_1/scores.csv": "c431d32250c0acd5c750adfbb350a3323934a2baade44a837e0b1ce48d486a8e",
+    "results/final/jpeg_compression_1/threshold_metrics.csv": "1ed067c1e6790b37042912c0505c83c2941b745bf3240cc93d6bb2547d2d1382",
+    "results/final/jpeg_compression_3/features.csv": "57c1b29827da6d1e252ea602e5ae60ffcb9ca0c2ce722c5693c9a1a86fe0b77d",
+    "results/final/jpeg_compression_3/scores.csv": "92331874022b28b5ab1e29c4c6dc595c59473d47704b44b5eaa22ae7afd9e12a",
+    "results/final/jpeg_compression_3/threshold_metrics.csv": "bcd5e0e188069c93f79e475d86f566d06a4ff51af8aee4debd83e86669561edb",
+    "results/final/jpeg_compression_5/features.csv": "e8175d31d470e3e3dc3e44ddad31165a994b4004ae892b1f97567dbb96ef2438",
+    "results/final/jpeg_compression_5/scores.csv": "b4829c36eb5d1d989d26e2838103aecaf6ee8c17e5b5497520ecb7369a9ba758",
+    "results/final/jpeg_compression_5/threshold_metrics.csv": "aab9f9b125bc2787ae9f27069acded93ba372565125ce0a08946b7b9222a88a9"
+  }
+}
