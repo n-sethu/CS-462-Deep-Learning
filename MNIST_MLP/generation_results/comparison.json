@@ -1,0 +1,122 @@
+{
+  "config": {
+    "all": true,
+    "variant": "both",
+    "steps": 3000,
+    "batch_size": 128,
+    "width": 32,
+    "lr": 0.0002,
+    "warmup": 500,
+    "samples": 256,
+    "sample_batch": 64,
+    "rf_nfe": 100,
+    "classifier_epochs": 5,
+    "seed": 2026,
+    "device": "auto",
+    "output": "generation_results"
+  },
+  "classifier_test_accuracy": 0.9879000186920166,
+  "metric_note": "MNIST classifier feature Frechet distance, NOT Inception FID. Lower is better. Single-seed pilot unless repeated. Combined improvements are not isolated ablations.",
+  "results": [
+    {
+      "name": "ddpm_baseline",
+      "mnist_feature_frechet": 28.55359070933173,
+      "class_counts": [
+        21,
+        22,
+        31,
+        22,
+        16,
+        17,
+        29,
+        33,
+        29,
+        36
+      ],
+      "class_entropy": 2.2693371772766113,
+      "mean_classifier_confidence": 0.8522419333457947,
+      "training_seconds": 245.74881991598522,
+      "sampling_seconds": 48.11334404099034,
+      "nfe_per_sample": 1000,
+      "samples": 256,
+      "seed": 2026,
+      "optimizer_updates": 3000,
+      "parameters": 1383265
+    },
+    {
+      "name": "ddpm_improved",
+      "mnist_feature_frechet": 24.890293596457013,
+      "class_counts": [
+        26,
+        25,
+        28,
+        24,
+        21,
+        28,
+        26,
+        37,
+        22,
+        19
+      ],
+      "class_entropy": 2.286365509033203,
+      "mean_classifier_confidence": 0.8851724863052368,
+      "training_seconds": 242.74146295897663,
+      "sampling_seconds": 47.33470791700529,
+      "nfe_per_sample": 1000,
+      "samples": 256,
+      "seed": 2026,
+      "optimizer_updates": 3000,
+      "parameters": 1383265
+    },
+    {
+      "name": "rf_baseline",
+      "mnist_feature_frechet": 23.945334756165266,
+      "class_counts": [
+        24,
+        19,
+        41,
+        22,
+        21,
+        16,
+        25,
+        27,
+        27,
+        34
+      ],
+      "class_entropy": 2.2673776149749756,
+      "mean_classifier_confidence": 0.8953521847724915,
+      "training_seconds": 247.64333829199313,
+      "sampling_seconds": 4.763051666988758,
+      "nfe_per_sample": 100,
+      "samples": 256,
+      "seed": 2026,
+      "optimizer_updates": 3000,
+      "parameters": 1383265
+    },
+    {
+      "name": "rf_improved",
+      "mnist_feature_frechet": 20.690268521924736,
+      "class_counts": [
+        25,
+        17,
+        41,
+        22,
+        18,
+        16,
+        27,
+        27,
+        33,
+        30
+      ],
+      "class_entropy": 2.2612714767456055,
+      "mean_classifier_confidence": 0.9076446294784546,
+      "training_seconds": 242.48332416597987,
+      "sampling_seconds": 4.719837707991246,
+      "nfe_per_sample": 100,
+      "samples": 256,
+      "seed": 2026,
+      "optimizer_updates": 3000,
+      "parameters": 1383265
+    }
+  ]
+}

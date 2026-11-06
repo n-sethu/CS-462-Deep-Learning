@@ -1,0 +1,25 @@
+{
+  "name": "rf_improved",
+  "mnist_feature_frechet": 20.690268521924736,
+  "class_counts": [
+    25,
+    17,
+    41,
+    22,
+    18,
+    16,
+    27,
+    27,
+    33,
+    30
+  ],
+  "class_entropy": 2.2612714767456055,
+  "mean_classifier_confidence": 0.9076446294784546,
+  "training_seconds": 242.48332416597987,
+  "sampling_seconds": 4.719837707991246,
+  "nfe_per_sample": 100,
+  "samples": 256,
+  "seed": 2026,
+  "optimizer_updates": 3000,
+  "parameters": 1383265
+}

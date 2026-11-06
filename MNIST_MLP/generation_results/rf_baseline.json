@@ -1,0 +1,25 @@
+{
+  "name": "rf_baseline",
+  "mnist_feature_frechet": 23.945334756165266,
+  "class_counts": [
+    24,
+    19,
+    41,
+    22,
+    21,
+    16,
+    25,
+    27,
+    27,
+    34
+  ],
+  "class_entropy": 2.2673776149749756,
+  "mean_classifier_confidence": 0.8953521847724915,
+  "training_seconds": 247.64333829199313,
+  "sampling_seconds": 4.763051666988758,
+  "nfe_per_sample": 100,
+  "samples": 256,
+  "seed": 2026,
+  "optimizer_updates": 3000,
+  "parameters": 1383265
+}

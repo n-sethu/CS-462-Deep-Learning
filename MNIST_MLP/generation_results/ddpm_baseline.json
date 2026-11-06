@@ -1,0 +1,25 @@
+{
+  "name": "ddpm_baseline",
+  "mnist_feature_frechet": 28.55359070933173,
+  "class_counts": [
+    21,
+    22,
+    31,
+    22,
+    16,
+    17,
+    29,
+    33,
+    29,
+    36
+  ],
+  "class_entropy": 2.2693371772766113,
+  "mean_classifier_confidence": 0.8522419333457947,
+  "training_seconds": 245.74881991598522,
+  "sampling_seconds": 48.11334404099034,
+  "nfe_per_sample": 1000,
+  "samples": 256,
+  "seed": 2026,
+  "optimizer_updates": 3000,
+  "parameters": 1383265
+}

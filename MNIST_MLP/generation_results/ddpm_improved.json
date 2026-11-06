@@ -1,0 +1,25 @@
+{
+  "name": "ddpm_improved",
+  "mnist_feature_frechet": 24.890293596457013,
+  "class_counts": [
+    26,
+    25,
+    28,
+    24,
+    21,
+    28,
+    26,
+    37,
+    22,
+    19
+  ],
+  "class_entropy": 2.286365509033203,
+  "mean_classifier_confidence": 0.8851724863052368,
+  "training_seconds": 242.74146295897663,
+  "sampling_seconds": 47.33470791700529,
+  "nfe_per_sample": 1000,
+  "samples": 256,
+  "seed": 2026,
+  "optimizer_updates": 3000,
+  "parameters": 1383265
+}
