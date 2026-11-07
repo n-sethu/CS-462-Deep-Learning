@@ -291,12 +291,16 @@ def aggregate(root):
             frame=pd.read_csv(source); frame['ensemble']=index; frame['study']=study
             if 'condition' not in frame: frame['condition']='clean'
             if 'estimate' in frame:
-                frame=frame[frame.metric.eq('aurc')].copy()
-                frame['delta_aurc']=frame['estimate']
+                # Replication tables mix native delta_aurc rows (metric is NaN)
+                # with count rows in estimate. Keep both forms of AURC evidence.
+                native=frame['delta_aurc'].notna() if 'delta_aurc' in frame else pd.Series(False,index=frame.index)
+                frame=frame[native | frame.metric.eq('aurc')].copy()
+                frame['delta_aurc']=frame.get('delta_aurc',pd.Series(index=frame.index,dtype=float)).fillna(frame['estimate'])
             records.append(frame)
     pd.DataFrame(status).to_csv(root/'status.csv',index=False)
     if not records: return
     joined=pd.concat(records,ignore_index=True)
+    if 'family' not in joined: joined['family']='encoded_in_comparison'
     joined.to_csv(root/'all_ensemble_contrasts.csv',index=False)
     # Summarize every contrast/condition as well as the central clean comparisons.
     detail=joined.copy()

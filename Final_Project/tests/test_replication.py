@@ -10,6 +10,19 @@ from src.replicate import initialize,aggregate,completed
 
 
 class ReplicationTests(unittest.TestCase):
+    def test_mixed_metric_table_retains_native_aurc(self):
+        import pandas as pd
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder); results=root/'ensemble_01/results'; results.mkdir(parents=True)
+            pd.DataFrame([
+                dict(condition='clean',subset='all',comparison='lr:B_minus_A',delta_aurc=-.01),
+                dict(condition='clean',subset='all',comparison='lr:count',metric='accepted_error_count',estimate=3),
+            ]).to_csv(results/'replication_bootstrap.csv',index=False)
+            aggregate(root)
+            rows=pd.read_csv(root/'all_ensemble_contrasts.csv')
+            self.assertEqual(len(rows),1)
+            self.assertEqual(rows.iloc[0].delta_aurc,-.01)
+
     def test_new_seeds_are_unique_and_architecture_fixed(self):
         c=json.loads(Path('configs/replication.json').read_text())
         seeds=[s for e in c['member_seeds'] for s in e]

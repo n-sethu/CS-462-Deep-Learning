@@ -1,5 +1,14 @@
 # Ten additional ensemble replications
 
+Cross-ensemble report and ten PNG/PDF figures: `python -m src.analyze_replication`.
+Outputs are kept separately in `results/replication_analysis/`; start with
+`SUMMARY.md` or `ANALYSIS.md`. This reads all ten runs directly, verifies clean
+metrics against saved scores, and reports paired ensemble effects with bootstrap
+and Student-t sensitivity intervals. It never refits or selects detectors.
+The aggregator now preserves native AURC rows in mixed AURC/count tables;
+previous root aggregates omitted the replication-specific subset/shift contrasts.
+The report reads those source tables directly and leaves old aggregates intact.
+
 The protocol in `configs/replication.json` fixes 30 new CNN seeds, grouped into ten ensembles. The original CNN architecture, saved data partition and executed validation-loss checkpoint recipe are preserved. Each ensemble trains its own detectors and computes its own novelty geometry and normalization. No test-based seed/ensemble selection is permitted.
 
 Scope per ensemble: A–D LR and three-seed MLPs (D is needed for H3), output rankings/shared temperature, clean and all nine corruptions, all/unanimous/confident-unanimous subsets, paired ablation intervals and accepted-error counts, all detector seed sensitivity, permutation reliance diagnostic, latency, Mahalanobis H7, depth H8, confidence-bin and paired-transition analyses, and the separate noise-adaptation experiment. Individual CNNs get accuracy and output-ranking AUROC/AURC/selective risk; cross-member H1 is defined only for ensembles.

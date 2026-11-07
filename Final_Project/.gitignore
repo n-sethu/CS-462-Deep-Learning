@@ -23,6 +23,9 @@ __pycache__/
 *.md
 *.slurm
 *.log
+*.json
+*.pdf
+
 # Separate detector adaptation caches and trained artifacts
 /results/adaptation/development/
 /results/adaptation/detectors/
@@ -33,3 +36,4 @@ __pycache__/
 !PAPER_SUMMARY.md
 !REPLICATION.md
 
+!results/adaptation/analysis/ANALYSIS.md
