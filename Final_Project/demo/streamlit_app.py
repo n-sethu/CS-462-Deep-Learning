@@ -95,8 +95,6 @@ with evidence:
         if len(rows)!=1:raise ValueError('Missing or duplicate offline effect')
         return rows.iloc[0]
     st.markdown('**Primary clean hypothesis: novelty variation adds value beyond mean novelty (C−B).**')
-    h1=get('replication','mlp_selected:C_minus_B',cond='clean')
-    st.warning(f'Unsupported: only {int(h1.negative)}/10 ensembles improve. Mean ΔAURC = {h1["mean"]:+.7f}. The percentile interval is barely above zero; the Student-t sensitivity interval spans zero. This does not establish equivalence or robust harm.')
     items=[];individual=individual_effects();dots=[]
     for label,study,comparison in [('Mean novelty · clean-trained','replication','mlp_selected:B_minus_A'),('Variation · clean-trained','replication','mlp_selected:C_minus_B'),('Mean novelty · adapted','adaptation','adapted_B_minus_A'),('Adaptation change · Gamma','adaptation','Gamma')]:
         row=get(study,comparison);items.append(dict(Comparison=label,mean=row['mean'],low=row.ci_low,high=row.ci_high,Improving=f'{int(row.negative)}/10',t_low=row.t_low,t_high=row.t_high))
