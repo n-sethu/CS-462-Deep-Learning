@@ -23,17 +23,20 @@ Run checks with `python -m unittest test_demo -v`. The `assets/` directory is se
 4. **21–27 seconds · Motion blur, severity 3, noise-adapted.** “Adaptation specializes the detector and can sacrifice transfer elsewhere.”
 5. **27–30 seconds · Replication evidence.** “Severe-noise recovery repeats across ten ensembles; the original clean variation hypothesis is unsupported.”
 
-The backup recording in `presentation/backup.mp4` shows this actual interaction sequence without narration. `presentation/NOTES.md` records the displayed counts. Recording tools are development-only dependencies.
+The silent [backup recording](presentation/backup.mp4) captures this sequence. These are the ensemble 01 values at 90% coverage.
+
+| Condition | Training | A errors | B errors | A AURC | B AURC |
+|---|---|---:|---:|---:|---:|
+| clean | clean_trained | 140 | 133 | 0.005544 | 0.005022 |
+| gaussian_noise_3 | clean_trained | 5235 | 5229 | 0.422754 | 0.427671 |
+| gaussian_noise_3 | adapted | 5216 | 5188 | 0.419832 | 0.418096 |
+| motion_blur_3 | adapted | 1837 | 1886 | 0.085318 | 0.084664 |
+
+At noise severity 3, clean-trained B catches six more errors at this coverage and has higher integrated AURC. Use both measurements in the walkthrough.
 
 ## Deploy to Streamlit Community Cloud
 
-The existing research repository is supported. The additive demo branch is `demo/cached-results-explorer-20261107`; use repository `n-sethu/CS-462-Deep-Learning`, that branch, and entrypoint `Final_Project/demo/streamlit_app.py`. Existing files and the main branch are preserved. The app dependencies are beside the entrypoint, so research training dependencies are not installed.
-
-Alternatively, upload the **contents of this demo directory** into a standalone GitHub repository and use `streamlit_app.py` as the entrypoint. Keep the assets, app, calculations, pinned requirements, and `.streamlit/config.toml` together.
-
-In https://share.streamlit.io/ create an app, connect that repository, choose its branch, set the entrypoint to `Final_Project/demo/streamlit_app.py` for the existing repository, and use Python 3.12. Deploy and test the four-step sequence above. No secrets are needed. Deployment requires the account owner’s authenticated Community Cloud workspace; a repository alone is not a deployed app.
-
-Official guide: https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app
+Select the repository and the branch containing the demo. Set the entrypoint to `Final_Project/demo/streamlit_app.py` and use Python 3.12. The requirements beside the entrypoint cover the app. For a standalone deployment of the demo directory, use `streamlit_app.py` as the entrypoint and include `assets/`, the calculations module, `requirements.txt`, and `.streamlit/config.toml`. The app requires no secrets.
 
 ## Data and interpretation
 
@@ -53,4 +56,4 @@ From the full research checkout:
 python scripts/export_demo.py --root results/replication --out demo/assets --data data
 ```
 
-The exporter reads cached scores/features, official local image archives and precomputed replication intervals. It writes `manifest.json` with source/output SHA-256 hashes, schema details and thumbnail indices, and `verification.csv` with count checks. It does not modify research artifacts. Its export dependencies are the research environment’s NumPy, pandas, Pillow and scikit-learn; they are not runtime app dependencies.
+The exporter requires the cluster replication runs, local CIFAR-10/CIFAR-10-C images, and precomputed replication intervals. It writes `manifest.json` with source/output SHA-256 hashes, schema details and thumbnail indices, and `verification.csv` with count checks. It does not modify research artifacts. Its export dependencies are the research environment’s NumPy, pandas, Pillow and scikit-learn; they are not runtime app dependencies.

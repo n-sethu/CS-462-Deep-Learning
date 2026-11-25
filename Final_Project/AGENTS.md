@@ -2,9 +2,9 @@
 
 **Detecting Confident Neural Network Failures Using Internal Representations**
 
-CS 462 final project (individual). Start: Oct 30, 2026. Presentation: Nov 25, 2026 (max 3 slides, 3 minutes). Final report: Dec 7, 2026. Budget: about 8-10 hours/week.
+CS 462 individual final project. This file records research scope and protocol. See the [project README](README.md) for the current layout and reproduction instructions, and the [paper summary](PAPER_SUMMARY.md) for completed results.
 
-> Source of truth for the AI coding agent working in this repo. Read fully before writing code. Follow the scope, split rules, leakage rules, and priority order exactly. When something is ambiguous, pick the simplest option that respects the rules, and note the choice in the README or config.
+> Source of truth for the AI coding agent working in this repo. Read fully before writing code. Follow the scope, split rules, and leakage controls. When something is ambiguous, pick the simplest option that respects the rules, and note the choice in the README or config.
 
 ---
 
@@ -53,7 +53,7 @@ H1 is the primary experiment. All others are extensions and **must not delay H1*
 - The defensible contribution is a **controlled ablation** isolating (i) mean novelty, (ii) cross-model novelty variation, and (iii) max novelty on top of strong output-only baselines, plus targeted unanimous-error and distribution-shift analysis.
 - Incremental value from latent features is **not guaranteed**. Cite *Auditing Latent-Space Monitors for Autonomous Driving (2026)* as an important related-work comparison and acknowledge this explicitly.
 - Outcomes: positive result may motivate a new method; negative result supports a careful empirical audit; mixed result may identify conditions where representation monitoring works. All are valid. Never overclaim.
-- Scope limit: one trained ensemble on one dataset is a course-project foundation, not a publication-level claim. A stronger paper would need multiple independently trained ensembles, stronger representation baselines, and a clearer account of when latent monitoring succeeds or fails. Say this in the limitations. Also keep open that `D_novelty` may just reflect differences in feature geometry across networks rather than useful error information.
+- Scope limit: the original ensemble and ten additional replications share one dataset, split, and CNN architecture. Training-seed replication addresses variability across fitted ensembles on that shared setup. Keep open that `D_novelty` may reflect differences in feature geometry across networks.
 
 Related work to read/cite: Lakshminarayanan 2017 (Deep Ensembles), Guo 2017 (Calibration / temperature scaling), Cattelan & Silva 2024 (simple confidence baselines are strong), Lee 2018 (Mahalanobis confidence), Papernot & McDaniel 2018 (Deep k-NN), Geifman & El-Yaniv 2017 (selective classification), Hendrycks & Dietterich 2019 (CIFAR-10-C), Ovadia 2019 (uncertainty under dataset shift), Auditing Latent-Space Monitors (2026).
 
@@ -76,8 +76,8 @@ Use CIFAR-10 only. Save split indices to disk and never regenerate them differen
 
 - 3 CIFAR-adapted ResNet-18 models (replace the large initial conv and maxpool with a small-image stem). Input `3x32x32`. Each yields logits (10) and a 512-d penultimate representation.
 - Same architecture and training recipe, **different random seeds** (changing both init and data order). Cross-entropy loss. Augmentation on the CNN train split only; deterministic preprocessing for all evaluation/feature extraction.
-- Record: optimizer, LR schedule, batch size, epochs, augmentation, checkpoint selection rule (best val accuracy), seeds.
-- If training is too slow, shrink the CNN rather than cutting later stages.
+- Record: optimizer, LR schedule, batch size, epochs, augmentation, checkpoint selection rule (minimum validation loss in the executed runs, a deviation from the original maximum-accuracy specification), seeds.
+- Use the configured architecture for reproductions.
 
 Ensemble: `p_m = softmax(l_m)`, `p_bar = mean_m p_m`, `y_hat = argmax p_bar`.
 
@@ -117,7 +117,7 @@ Also compute the fraction of examples where all 3 models agree.
 **B2 (optional, only after Exp 1 is complete): Mahalanobis novelty**
 - `d_Mah_m(x) = sqrt((h_m(x) - mu_{m,y_hat})^T Sigma_m^{-1} (h_m(x) - mu_{m,y_hat}))`, with `Sigma_m` from train-split features.
 - Use a regularized/shrinkage covariance (e.g. Ledoit-Wolf), never a raw inverse of a 512-d sample covariance.
-- Standardize and aggregate exactly like B1. Tests H7. Planned slot: Nov 17 if primary experiments are done; otherwise use that day to investigate unexpected results.
+- Standardize and aggregate exactly like B1. Tests H7.
 
 **B3 (optional, only if time permits): representation depth**
 - Extract representations from several ResNet stages and compute novelty per stage; compare error detection by depth and by clean vs. corrupted data. Tests H8.
@@ -203,117 +203,9 @@ Deliverables: main comparison table and risk-coverage curves.
 - Note multiple comparisons (several ΔAURC tests); don't cherry-pick the best one.
 - Do not overstate: results are limited to this architecture, dataset, corruptions, and training protocol.
 - Record and version: split indices, all seeds, architecture, optimizer, LR, batch size, epochs, augmentation, checkpoint rule, feature normalization, detector hyperparameters. Pin dependency versions.
-- Cache logits/representations/features to disk so evaluation never needs retraining or CNN re-inference. All experiments reproducible from saved checkpoints via scripts.
+- Cache logits, representations, and features during evaluation. Keep datasets and checkpoints outside Git. Compact replication results retain the evidence needed for tabular analysis. Recreating retired raw representation caches requires inference from the retained checkpoints.
 
-## 12. ML research-engineer mindset (best practices)
-
-- **Baselines first.** Build strong output-only baselines (calibrated confidence, LR, MLP) before the proposed idea; judge the idea against them.
-- **Change one thing at a time.** A-D differ only in input features; same data, architecture, training recipe, predictions, and test examples.
-- **Strict train/val/test discipline.** Test is for reporting, not decisions. No peeking; no tuning on test or CIFAR-10-C.
-- **Pre-commit decisions.** Fix corruptions, metrics, splits, and hypotheses before seeing results. No p-hacking.
-- **Sanity-check everything.** Overfit a tiny batch, verify models differ, unit-test metrics (e.g. AURC on a perfect/random ranker), assert no label use in feature code.
-- **Quantify uncertainty.** Multiple seeds and bootstrap CIs; be skeptical of small subsets.
-- **Report negatives and explain them.** A clean null result is a valid, valuable outcome.
-- **Do failure analysis.** Inspect when the detector is wrong or worse than baseline; show detected and missed errors.
-- **Modular, cached pipeline.** Training, feature extraction, detection, evaluation, and demo are separate stages connected by cached artifacts and configs; reproducible with one command.
-- **Be ready to explain:** why representations might hold information absent from outputs; how the contribution is isolated; whether an AURC gain is meaningful; behavior under shift; inference cost; when the detector hurts.
-- **Resist scope creep.** Finish the primary result first.
-
-## 13. Demo (Streamlit)
-
-Show for a selected cached example: input image, predictions from all 3 CNNs, ensemble confidence and disagreement, mean novelty, cross-model novelty variation, estimated error probability, accept/abstain decision. Include examples of confident correct agreement, **confident incorrect agreement**, ensemble disagreement, and corrupted inputs. Also a results view: risk-coverage curves, AURC/AUROC table, confidence-vs-novelty scatter, gallery of detected and missed errors. Use cached predictions so evaluation never requires live inference.
-
-## 14. Repo structure
-
-```
-beyond-ensemble-agreement/
-├── configs/        ensemble.yaml, detector.yaml
-├── src/            data.py models.py train_ensemble.py extract_features.py
-│                   representation.py train_detector.py evaluate.py metrics.py
-├── app/            streamlit_app.py
-├── scripts/        run_baselines.sh run_experiments.sh
-├── results/        tables/ figures/
-├── reports/        presentation.pdf final_report.pdf
-├── requirements.txt
-└── README.md
-```
-
-Do not commit datasets or checkpoints to Git. The README must explain how to reproduce experiments and launch the demo.
-
-## 15. Timeline (8-10 hrs/week)
-
-**Week 1 (Oct 30 - Nov 5): Component A. Ensemble and output-only baselines.**
-- Oct 30: read Lakshminarayanan, Guo, Cattelan & Silva; create repo/configs; download CIFAR-10; make stratified splits; implement CIFAR ResNet-18; verify train step, eval step, checkpointing.
-- Oct 31 - Nov 2: train 3 ResNet-18s (different seeds); report accuracies; cache logits/probabilities; verify models differ and ensemble math is correct.
-- Nov 3: output features `Z_out`; agreement fraction; feature table with correctness.
-- Nov 4: baselines (4 rankings, output-only LR and MLP, temperature scaling fit on validation); baseline AUROC/AURC.
-- Nov 5: risk-coverage curves, confidence distributions (correct vs. incorrect), agreement statistics.
-- *Milestone:* working ensemble with reproducible output-only baselines.
-
-**Week 2 (Nov 6 - Nov 12): Components B and C. Primary experiment.**
-- Nov 6: read Lee 2018 and Papernot & McDaniel 2018; extract and cache penultimate representations for all splits.
-- Nov 7: centroids, standardized predicted-class novelty (3 scores per input).
-- Nov 8: `d_bar`, `D_novelty`, `d_max`; novelty distribution plots.
-- Nov 9: train detectors A-D, each as LR and MLP (8 total).
-- Nov 10: primary test-set evaluation (AUROC, AURC, risk at 80/90% coverage); main table and curves.
-- Nov 11: 3-seed MLP repeats; select primary seeds by validation AURC and freeze; paired bootstrap CIs for `ΔAURC = AURC(C) - AURC(B)` on the frozen detectors; 3-seed results as sensitivity analysis; permutation-importance diagnostic for `D_novelty`.
-- Nov 12: interpret: does mean novelty help (H2)? does variation add value (H1)? does max help (H3)? is LR as good as MLP (H6)?
-- *Milestone (critical, Nov 12):* primary hypothesis tested.
-
-**Week 3 (Nov 13 - Nov 19): Failure analysis and distribution shift.**
-- Nov 13: unanimous-agreement analysis (all detectors).
-- Nov 14: confident-error analysis (`c >= 0.9`), example gallery.
-- Nov 15-16: read Hendrycks & Dietterich and Ovadia; CIFAR-10-C evaluation (3 corruptions x severities 1, 3, 5), no detector retraining.
-- Nov 17: optional Mahalanobis vs. Euclidean, or investigate unexpected results.
-- Nov 18: latency/overhead table; failure cases where representation features hurt.
-- Nov 19: freeze result tables and figures; identify strongest supported conclusion.
-- *Milestone:* complete empirical evaluation.
-
-**Week 4 (Nov 20 - Nov 25): Demo and presentation.**
-- Nov 20-21: Streamlit demo.
-- Nov 22: final figures: risk-coverage comparison; novelty variation vs. correctness; unanimous-agreement results; distribution-shift comparison.
-- Nov 23: 3 slides. (1) Motivation: ensembles can confidently agree on wrong answers; can novelty variation reveal them? (2) Method: 3 CNNs, output + novelty features, learned detector, controlled ablation. (3) Results: primary AURC comparison, unanimous-error findings, one representative example. Do not explain every equation.
-- Nov 24: reproduce main results from checkpoints, test demo, verify figures/stats, rehearse, prepare limitations and negative-result answers.
-- Nov 25: present (3 minutes).
-
-**Nov 26 - Dec 7: Final report.** Sections: abstract; introduction; related work (ensembles, representation novelty, selective classification, plus the 2026 latent-space monitor audit); method; experimental setup; results and ablations; analysis (unanimous errors, shift); limitations (statistical power, cost, generalization); conclusion. Prioritize exam prep before Dec 4.
-
-## 16. Scope
-
-| Item | Status |
-|---|---|
-| 3x ResNet-18 ensemble, output baselines (rankings, temperature scaling, LR, MLP) | Required |
-| Representation novelty (`d_bar`, `D_novelty`, `d_max`), detectors A-D x {LR, MLP} | Required |
-| Clean CIFAR-10 evaluation, unanimous-error analysis, CIFAR-10-C (3 corruptions x 3 severities) | Required |
-| Cost/failure analysis, Streamlit demo, 3 slides, reproducible repo | Required |
-| Mahalanobis novelty, multi-layer representations, MC Dropout, additional architectures | Optional, only after primary results |
-| Additional datasets | Do not add |
-
-### Priorities if time runs short
-
-This project is about error detection, **not** training a high-accuracy classifier. The biggest risk is burning week 1 debugging ResNet training. If training is slow, simplify the architecture (smaller CNN, fewer epochs) before sacrificing the primary experiment.
-
-| Priority | Component | Why |
-|---|---|---|
-| P0 | Working ensemble + cached predictions | Everything depends on it |
-| P0 | Output-only baselines | Sets the bar to beat |
-| P0 | Novelty features and B vs. C | Tests the primary hypothesis |
-| P1 | Statistical evaluation (frozen seeds, bootstrap, AURC tests) | Makes results credible |
-| P1 | Unanimous-agreement analysis | Tests the motivating failure mode |
-| P1 | CIFAR-10-C | Robustness |
-| P2 | Full interactive demo | Communication, not science |
-| P3 | Optional novelty metrics (Mahalanobis, depth, MC Dropout) | Only after primary results |
-
-## 17. Definition of success
-
-Answer three questions with reproducible evidence:
-1. Does representation novelty improve error detection beyond output uncertainty?
-2. Does cross-model novelty variation provide information beyond mean novelty?
-3. Do these findings hold for unanimously agreeing ensembles and corrupted inputs?
-
-The critical milestone is **Nov 12**. Everything after it should strengthen the evidence, analyze failures, and communicate results, not start a fundamentally new project.
-
-## 18. Authorized exploratory detector adaptation
+## 12. Authorized exploratory detector adaptation
 
 This separate follow-up asks: **Does Gaussian-noise exposure restore mean novelty's incremental benefit, and preserve its usefulness on clean images and other corruptions?** It extends scope for adaptation only; the original clean-only experiments, frozen artifacts, and H1 outcome remain unchanged.
 
@@ -329,12 +221,12 @@ This separate follow-up asks: **Does Gaussian-noise exposure restore mean novelt
 - Recovered novelty benefit requires **adapted B beating adapted A**, not merely improvement of B over its clean-trained version. A negative Gamma alone does not demonstrate recovery. Interpret evidence as conditional on one ensemble and an adaptation recipe, not proof of a causal mechanism. Report multiple comparisons without cherry-picking.
 - Protocol: `configs/adaptation.json`; runner: `python -m src.adaptation --stage all --device cuda`; artifacts: `results/adaptation/`. Keep the original `results/validation`, `results/final`, and exploratory analysis immutable. Corruption-mixture or per-family specialization is outside this authorized first adaptation run.
 
-## 19. Authorized ten-ensemble replication
+## 13. Authorized ten-ensemble replication
 
 Train **ten additional independent ensembles**, three fresh CIFAR ResNet-18s each, with the original executed recipe and saved splits. Seeds and stages are fixed in `configs/replication.json`. Keep checkpoint selection by validation loss to match the original run; report this deviation from the initial accuracy-selection specification. Do not change architecture, width, pooling or depth of the CNNs in this replication.
 
 Each ensemble computes its own centroids, clean novelty normalization, output features, calibrated ranking, and A–D LR/three-seed MLP detectors. Repeat all clean/shift, agreement/confidence, geometry/depth, permutation, cost, and noise-adaptation analyses. Freeze choices on that ensemble's development validation before test evaluation. H1 is ensemble-level; individual CNNs receive accuracy and confidence/entropy/margin detection metrics, not an undefined cross-member-variation hypothesis. Never treat 30 correlated members as 30 independent ensembles.
 
-Use isolated workspaces and a hashed source snapshot; do not modify existing experiments. Submit ten one-GPU tasks with at most two concurrent ensembles, three CNNs sequentially within each task. No figures/galleries are needed before analysis. Retain model-only best CNN checkpoints, detector/scaler/geometry artifacts, compact logits, labels/IDs, compressed feature/score/metric CSVs and provenance. Delete only these new runs' large intermediate representation caches after every dependent stage and integrity check succeeds; record retired files and hashes. Reproducing new geometry afterward may require CNN re-inference but no retraining. Never delete original caches.
+Use isolated workspaces and a hashed source snapshot; do not modify existing experiments. Submit ten one-GPU tasks with at most two concurrent ensembles, three CNNs sequentially within each task. The worker retains tabular evidence. The separate replication analysis generates the cross-ensemble figures. Retain model-only best CNN checkpoints, detector/scaler/geometry artifacts, compact logits, labels/IDs, compressed feature/score/metric CSVs and provenance. Delete only these new runs' large intermediate representation caches after every dependent stage and integrity check succeeds; record retired files and hashes. Reproducing new geometry afterward may require CNN re-inference but no retraining. Never delete original caches.
 
 Report every ensemble's B−A/C−B, all conditions and negative results. Summarize the ten new ensembles separately from the motivating original ensemble, using mean/std, median, effect-sign frequency and ensemble-resampled mean-effect intervals. Shared test images/splits remain a limitation; a training-seed replication is not untouched-data confirmation. Secondary extensions remain exploratory. No test-based ensemble selection or adaptive stopping.
